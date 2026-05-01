@@ -18,6 +18,7 @@
   - Tested independently
   - Deployed independently
   - Demonstrated to users independently
+  - Proven by automated tests that fail before implementation begins
 -->
 
 ### User Story 1 - [Brief Title] (Priority: P1)
@@ -33,6 +34,9 @@
 1. **Given** [initial state], **When** [action], **Then** [expected outcome]
 2. **Given** [initial state], **When** [action], **Then** [expected outcome]
 
+**Test-First Proof**: [Name the automated test file(s) or scenario(s) that will be
+written first and fail before implementation]
+
 ---
 
 ### User Story 2 - [Brief Title] (Priority: P2)
@@ -47,6 +51,9 @@
 
 1. **Given** [initial state], **When** [action], **Then** [expected outcome]
 
+**Test-First Proof**: [Name the automated test file(s) or scenario(s) that will be
+written first and fail before implementation]
+
 ---
 
 ### User Story 3 - [Brief Title] (Priority: P3)
@@ -60,6 +67,9 @@
 **Acceptance Scenarios**:
 
 1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+
+**Test-First Proof**: [Name the automated test file(s) or scenario(s) that will be
+written first and fail before implementation]
 
 ---
 
@@ -89,11 +99,14 @@
 - **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-006**: System MUST define or update the contract for every external interface
+  changed by this feature, or explicitly state that no external contract changes are
+  required.
 
 *Example of marking unclear requirements:*
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-007**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
+- **FR-008**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
 ### Key Entities *(include if feature involves data)*
 
