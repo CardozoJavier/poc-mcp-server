@@ -54,7 +54,7 @@
    - `Initialize Session`
    - `Initialized Notification`
    - `List Tools`
-   - New `Build Order Request` request added during implementation
+   - `Build Order Request`
 
 4. Confirm the tool response includes:
 
@@ -73,3 +73,8 @@
 - Authentication-enhanced requirements are enforced when the order context requires them.
 - Recurring sequence rules are enforced for initial, recurring, and final flows.
 - Logs do not include customer email, IP address, browser fingerprint, redirect URLs, or complete request drafts.
+- Repository text does not contain the prohibited vendor term:
+
+  ```bash
+  term="$(printf 'Re%s' 'vup')"; lower="$(printf 're%s' 'vup')"; rg -n "$term|$lower" . -g '!target/**' -g '!/.git/**'
+  ```

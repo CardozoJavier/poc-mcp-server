@@ -17,8 +17,8 @@
 
 **Purpose**: Create the package and test support locations used by all stories.
 
-- [ ] T001 Create order package directories at `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/` and `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/`
-- [ ] T002 [P] Create reusable valid draft fixtures in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/OrderDraftTestFixtures.java`
+- [X] T001 Create order package directories at `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/` and `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/`
+- [X] T002 [P] Create reusable valid draft fixtures in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/OrderDraftTestFixtures.java`
 
 ---
 
@@ -28,10 +28,10 @@
 
 **CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T003 Create request draft records for standard, optional, authentication, recurring, item, and processor context data in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestDraft.java`
-- [ ] T004 [P] Create validation category and issue value types in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/ValidationIssue.java`
-- [ ] T005 [P] Create validation response type with ready state, flow types, draft, missing fields, issues, warnings, and next steps in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/ValidationResult.java`
-- [ ] T006 Create validation service skeleton without story-specific rules in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T003 Create request draft records for standard, optional, authentication, recurring, item, and processor context data in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestDraft.java`
+- [X] T004 [P] Create validation category and issue value types in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/ValidationIssue.java`
+- [X] T005 [P] Create validation response type with ready state, flow types, draft, missing fields, issues, warnings, and next steps in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/ValidationResult.java`
+- [X] T006 Create validation service skeleton without story-specific rules in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin.
 
@@ -47,18 +47,18 @@
 
 > Write these tests FIRST and confirm they fail before implementation.
 
-- [ ] T007 [P] [US1] Add MCP contract test for `build_order_request` tool exposure and output fields in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolContractTests.java`
-- [ ] T008 [P] [US1] Add standard complete, missing required, invalid code, invalid URL, invalid IP, and optional context tests in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolValidationTests.java`
-- [ ] T009 [P] [US1] Add safe logging assertions for `build_order_request` readiness and issue counts in `src/test/java/com/cardozojavier/pocmcpserver/mcp/PaymentGatewayToolsLoggingTests.java`
+- [X] T007 [P] [US1] Add MCP contract test for `build_order_request` tool exposure and output fields in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolContractTests.java`
+- [X] T008 [P] [US1] Add standard complete, missing required, invalid code, invalid URL, invalid IP, and optional context tests in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolValidationTests.java`
+- [X] T009 [P] [US1] Add safe logging assertions for `build_order_request` readiness and issue counts in `src/test/java/com/cardozojavier/pocmcpserver/mcp/PaymentGatewayToolsLoggingTests.java`
 
 ### Implementation for User Story 1
 
-- [ ] T010 [US1] Add `build_order_request` MCP tool method and validator dependency in `src/main/java/com/cardozojavier/pocmcpserver/mcp/PaymentGatewayTools.java`
-- [ ] T011 [US1] Implement standard required field validation for money, notification URL, redirect URLs, user information, browser information, and domain in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T012 [US1] Implement standard value validation for amount, ISO currency, ISO country, ISO language, public IPv4, email shape, and URLs in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T013 [US1] Implement standard draft normalization and next-step messages without submission claims in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T014 [US1] Log only tool name, readiness, flow types, and issue counts for standard drafts in `src/main/java/com/cardozojavier/pocmcpserver/mcp/PaymentGatewayTools.java`
-- [ ] T015 [US1] Run `./mvnw test -Dtest=CreateOrderToolValidationTests,CreateOrderToolContractTests,PaymentGatewayToolsLoggingTests` for `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolValidationTests.java`
+- [X] T010 [US1] Add `build_order_request` MCP tool method and validator dependency in `src/main/java/com/cardozojavier/pocmcpserver/mcp/PaymentGatewayTools.java`
+- [X] T011 [US1] Implement standard required field validation for money, notification URL, redirect URLs, user information, browser information, and domain in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T012 [US1] Implement standard value validation for amount, ISO currency, ISO country, ISO language, public IPv4, email shape, and URLs in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T013 [US1] Implement standard draft normalization and next-step messages without submission claims in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T014 [US1] Log only tool name, readiness, flow types, and issue counts for standard drafts in `src/main/java/com/cardozojavier/pocmcpserver/mcp/PaymentGatewayTools.java`
+- [X] T015 [US1] Run `./mvnw test -Dtest=CreateOrderToolValidationTests,CreateOrderToolContractTests,PaymentGatewayToolsLoggingTests` for `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolValidationTests.java`
 
 **Checkpoint**: User Story 1 is independently functional and demoable as the MVP.
 
@@ -74,15 +74,15 @@
 
 > Write these tests FIRST and confirm they fail before implementation.
 
-- [ ] T016 [P] [US2] Add tests for region-triggered authentication requirements and missing challenge redirect in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolAuthenticationTests.java`
-- [ ] T017 [P] [US2] Add tests for complete authentication details and non-guaranteed challenge warning in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolAuthenticationTests.java`
+- [X] T016 [P] [US2] Add tests for region-triggered authentication requirements and missing challenge redirect in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolAuthenticationTests.java`
+- [X] T017 [P] [US2] Add tests for complete authentication details and non-guaranteed challenge warning in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolAuthenticationTests.java`
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Implement authentication-required detection and missing authentication fields in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T019 [US2] Implement challenge-result redirect validation and authentication detail preservation in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T020 [US2] Add non-blocking warning that authentication fields support but do not guarantee a challenge in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T021 [US2] Run `./mvnw test -Dtest=CreateOrderToolAuthenticationTests,CreateOrderToolValidationTests` for `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolAuthenticationTests.java`
+- [X] T018 [US2] Implement authentication-required detection and missing authentication fields in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T019 [US2] Implement challenge-result redirect validation and authentication detail preservation in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T020 [US2] Add non-blocking warning that authentication fields support but do not guarantee a challenge in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T021 [US2] Run `./mvnw test -Dtest=CreateOrderToolAuthenticationTests,CreateOrderToolValidationTests` for `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolAuthenticationTests.java`
 
 **Checkpoint**: User Stories 1 and 2 both work independently.
 
@@ -98,16 +98,16 @@
 
 > Write these tests FIRST and confirm they fail before implementation.
 
-- [ ] T022 [P] [US3] Add initial recurring setup tests for recurrence type, sequence, minimum period, and token generation in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolRecurringTests.java`
-- [ ] T023 [P] [US3] Add recurring and final sequence tests for parent transaction requirement and token-generation rejection in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolRecurringTests.java`
-- [ ] T024 [P] [US3] Add invalid minimum period and invalid recurring sequence tests in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolRecurringTests.java`
+- [X] T022 [P] [US3] Add initial recurring setup tests for recurrence type, sequence, minimum period, and token generation in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolRecurringTests.java`
+- [X] T023 [P] [US3] Add recurring and final sequence tests for parent transaction requirement and token-generation rejection in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolRecurringTests.java`
+- [X] T024 [P] [US3] Add invalid minimum period and invalid recurring sequence tests in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolRecurringTests.java`
 
 ### Implementation for User Story 3
 
-- [ ] T025 [US3] Implement recurring type, sequence, and minimum period validation in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T026 [US3] Implement initial recurring token-generation rules in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T027 [US3] Implement parent transaction and no-new-token rules for recurring and final sequences in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
-- [ ] T028 [US3] Run `./mvnw test -Dtest=CreateOrderToolRecurringTests,CreateOrderToolValidationTests` for `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolRecurringTests.java`
+- [X] T025 [US3] Implement recurring type, sequence, and minimum period validation in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T026 [US3] Implement initial recurring token-generation rules in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T027 [US3] Implement parent transaction and no-new-token rules for recurring and final sequences in `src/main/java/com/cardozojavier/pocmcpserver/mcp/order/OrderRequestValidator.java`
+- [X] T028 [US3] Run `./mvnw test -Dtest=CreateOrderToolRecurringTests,CreateOrderToolValidationTests` for `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolRecurringTests.java`
 
 **Checkpoint**: All user stories are independently functional.
 
@@ -117,12 +117,12 @@
 
 **Purpose**: Complete manual verification, documentation synchronization, and regression checks across all stories.
 
-- [ ] T029 [P] Add a `Build Order Request` MCP call example and response assertions in `postman/poc-mcp-server-tools.postman_collection.json`
-- [ ] T030 [P] Update manual verification steps to mention the final Postman request name in `specs/003-create-order-tool/quickstart.md`
-- [ ] T031 [P] Add repository text guard test or documented check for vendor-specific naming in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolContractTests.java`
-- [ ] T032 Run full regression suite with `./mvnw test` for `pom.xml`
-- [ ] T033 Run the repository naming guard for the prohibited vendor term from `specs/003-create-order-tool/quickstart.md`
-- [ ] T034 Confirm every implemented behavior still matches `specs/003-create-order-tool/contracts/build-order-request.md`
+- [X] T029 [P] Add a `Build Order Request` MCP call example and response assertions in `postman/poc-mcp-server-tools.postman_collection.json`
+- [X] T030 [P] Update manual verification steps to mention the final Postman request name in `specs/003-create-order-tool/quickstart.md`
+- [X] T031 [P] Add repository text guard test or documented check for vendor-specific naming in `src/test/java/com/cardozojavier/pocmcpserver/mcp/order/CreateOrderToolContractTests.java`
+- [X] T032 Run full regression suite with `./mvnw test` for `pom.xml`
+- [X] T033 Run the repository naming guard for the prohibited vendor term from `specs/003-create-order-tool/quickstart.md`
+- [X] T034 Confirm every implemented behavior still matches `specs/003-create-order-tool/contracts/build-order-request.md`
 
 ---
 

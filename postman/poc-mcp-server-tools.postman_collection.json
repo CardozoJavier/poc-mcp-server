@@ -280,6 +280,49 @@
           }
         }
       ]
+    },
+    {
+      "name": "Build Order Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json, text/event-stream"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Mcp-Session-Id",
+            "value": "{{sessionId}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 5,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"build_order_request\",\n    \"arguments\": {\n      \"requestDraft\": {\n        \"money\": {\n          \"amount\": 25.50,\n          \"currency\": \"USD\"\n        },\n        \"notificationUrl\": \"https://merchant.example/notifications\",\n        \"redirectUrl\": {\n          \"success\": \"https://merchant.example/success\",\n          \"fail\": \"https://merchant.example/fail\"\n        },\n        \"userInformation\": {\n          \"ip\": \"93.184.216.34\",\n          \"email\": \"buyer@example.com\",\n          \"country\": \"US\",\n          \"language\": \"en\",\n          \"customerId\": \"customer-123\",\n          \"browserInformation\": {\n            \"userAgentHeader\": \"Mozilla/5.0\",\n            \"acceptHeader\": \"text/html,application/xhtml+xml\",\n            \"fingerprint\": \"browser-fingerprint\"\n          },\n          \"domain\": \"https://merchant.example\"\n        }\n      }\n    }\n  }\n}"
+        },
+        "url": "{{baseUrl}}{{mcpPath}}",
+        "description": "Calls the order request draft builder with a standard sample payload."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('order request builder responded', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.text()).to.include('build_order_request');",
+              "  pm.expect(pm.response.text()).to.include('ready');",
+              "  pm.expect(pm.response.text()).to.include('requestDraft');",
+              "  pm.expect(pm.response.text()).to.include('nextSteps');",
+              "});"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
