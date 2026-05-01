@@ -31,7 +31,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- `Spec-Driven Planning`: Confirm the active spec path, plan path, and real project
+  structure are identified before research starts.
+- `Test-First Delivery`: List the automated test suites and describe how failing tests
+  will be created before implementation for each story.
+- `Contract-First Interfaces`: Identify every external interface or state why no
+  interface contract artifact is needed.
+- `Minimal, Composable Changes`: List new dependencies, abstractions, or directories.
+  Any addition beyond the current pattern MUST be justified in Complexity Tracking.
+- `Scriptable, Traceable Operations`: Identify scripts, templates, skills, or docs
+  that must stay synchronized with this change.
 
 ## Project Structure
 
