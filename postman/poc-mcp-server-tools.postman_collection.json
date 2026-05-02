@@ -1,0 +1,328 @@
+{
+  "info": {
+    "_postman_id": "d78eb9cf-a24e-45d5-81d3-50dad4e6afc9",
+    "name": "poc-mcp-server tools",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for exercising the local Spring AI MCP server over Streamable HTTP."
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{username}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{password}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8080"
+    },
+    {
+      "key": "mcpPath",
+      "value": "/mcp"
+    },
+    {
+      "key": "username",
+      "value": "mcp"
+    },
+    {
+      "key": "password",
+      "value": "change-me-local-only"
+    },
+    {
+      "key": "sessionId",
+      "value": ""
+    },
+    {
+      "key": "protocolVersion",
+      "value": "2025-11-25"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/actuator/health",
+        "description": "Public liveness endpoint."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('health is reachable', function () {",
+              "  pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Initialize Session",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json, text/event-stream"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"initialize\",\n  \"params\": {\n    \"protocolVersion\": \"{{protocolVersion}}\",\n    \"capabilities\": {},\n    \"clientInfo\": {\n      \"name\": \"Postman\",\n      \"version\": \"1.0.0\"\n    }\n  }\n}"
+        },
+        "url": "{{baseUrl}}{{mcpPath}}",
+        "description": "Starts an MCP session and stores the returned `Mcp-Session-Id` as a collection variable."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('initialize succeeded', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const sessionId = pm.response.headers.get('Mcp-Session-Id');",
+              "pm.test('session id returned', function () {",
+              "  pm.expect(sessionId).to.be.a('string').and.not.empty;",
+              "});",
+              "pm.collectionVariables.set('sessionId', sessionId);",
+              "",
+              "const payload = pm.response.json();",
+              "pm.test('initialize response is JSON-RPC', function () {",
+              "  pm.expect(payload.jsonrpc).to.eql('2.0');",
+              "  pm.expect(payload.result).to.exist;",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Initialized Notification",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json, text/event-stream"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Mcp-Session-Id",
+            "value": "{{sessionId}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"method\": \"notifications/initialized\",\n  \"params\": {}\n}"
+        },
+        "url": "{{baseUrl}}{{mcpPath}}",
+        "description": "Completes client initialization for the active MCP session."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('initialized notification accepted', function () {",
+              "  pm.response.to.have.status(202);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "List Tools",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json, text/event-stream"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Mcp-Session-Id",
+            "value": "{{sessionId}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 2,\n  \"method\": \"tools/list\",\n  \"params\": {}\n}"
+        },
+        "url": "{{baseUrl}}{{mcpPath}}",
+        "description": "Streams back the MCP tool catalog as Server-Sent Events."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('tools/list streamed', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.text()).to.include('describe_payment_gateway_scope');",
+              "  pm.expect(pm.response.text()).to.include('normalize_payment_request');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Describe Payment Gateway Scope",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json, text/event-stream"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Mcp-Session-Id",
+            "value": "{{sessionId}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 3,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"describe_payment_gateway_scope\",\n    \"arguments\": {}\n  }\n}"
+        },
+        "url": "{{baseUrl}}{{mcpPath}}",
+        "description": "Calls the scope/roadmap tool."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('scope tool responded', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.text()).to.include('setup');",
+              "  pm.expect(pm.response.text()).to.include('streamable-http-webmvc');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Normalize Payment Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json, text/event-stream"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Mcp-Session-Id",
+            "value": "{{sessionId}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 4,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"normalize_payment_request\",\n    \"arguments\": {\n      \"currency\": \"usd\",\n      \"amount\": 10.129\n    }\n  }\n}"
+        },
+        "url": "{{baseUrl}}{{mcpPath}}",
+        "description": "Calls the normalization tool with a sample payment payload."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('normalization tool responded', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.text()).to.include('USD');",
+              "  pm.expect(pm.response.text()).to.include('1013');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Build Order Request",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json, text/event-stream"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Mcp-Session-Id",
+            "value": "{{sessionId}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 5,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"build_order_request\",\n    \"arguments\": {\n      \"requestDraft\": {\n        \"money\": {\n          \"amount\": 25.50,\n          \"currency\": \"USD\"\n        },\n        \"notificationUrl\": \"https://merchant.example/notifications\",\n        \"redirectUrl\": {\n          \"success\": \"https://merchant.example/success\",\n          \"fail\": \"https://merchant.example/fail\"\n        },\n        \"userInformation\": {\n          \"ip\": \"93.184.216.34\",\n          \"email\": \"buyer@example.com\",\n          \"country\": \"US\",\n          \"language\": \"en\",\n          \"customerId\": \"customer-123\",\n          \"browserInformation\": {\n            \"userAgentHeader\": \"Mozilla/5.0\",\n            \"acceptHeader\": \"text/html,application/xhtml+xml\",\n            \"fingerprint\": \"browser-fingerprint\"\n          },\n          \"domain\": \"https://merchant.example\"\n        }\n      }\n    }\n  }\n}"
+        },
+        "url": "{{baseUrl}}{{mcpPath}}",
+        "description": "Calls the order request draft builder with a standard sample payload."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('order request builder responded', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.text()).to.include('build_order_request');",
+              "  pm.expect(pm.response.text()).to.include('ready');",
+              "  pm.expect(pm.response.text()).to.include('requestDraft');",
+              "  pm.expect(pm.response.text()).to.include('nextSteps');",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -12,10 +12,19 @@ import org.springframework.ai.mcp.annotation.McpTool;
 import org.springframework.ai.mcp.annotation.McpToolParam;
 import org.springframework.stereotype.Component;
 
+import com.cardozojavier.pocmcpserver.mcp.order.OrderRequestValidator;
+import com.cardozojavier.pocmcpserver.mcp.order.ValidationResult;
+
 @Component
 public class PaymentGatewayTools {
 
 	private static final Logger logger = LoggerFactory.getLogger(PaymentGatewayTools.class);
+
+	private final OrderRequestValidator orderRequestValidator;
+
+	public PaymentGatewayTools(OrderRequestValidator orderRequestValidator) {
+		this.orderRequestValidator = orderRequestValidator;
+	}
 
 	@McpTool(name = "describe_payment_gateway_scope", description = "Describe the current MCP server scope and next implementation milestones.")
 	public Map<String, Object> describePaymentGatewayScope() {
@@ -52,6 +61,22 @@ public class PaymentGatewayTools {
 			normalizedCurrency,
 			response.get("readyForGatewayMapping"));
 		return response;
+	}
+
+	@McpTool(name = "build_order_request", description = "Build and validate an order creation request draft for standard, authentication-enhanced, and recurring payment flows without submitting it.")
+	public Map<String, Object> buildOrderRequest(
+			@McpToolParam(description = "Order creation request draft", required = true) Map<String, Object> requestDraft) {
+
+		ValidationResult result = orderRequestValidator.validate(requestDraft);
+
+		logger.info(
+			"tool_invoked name=build_order_request ready={} flowTypes={} missingFieldCount={} issueCount={}",
+			result.ready(),
+			result.flowTypes(),
+			result.missingFields().size(),
+			result.validationIssues().size());
+
+		return result.toMap();
 	}
 
 }
